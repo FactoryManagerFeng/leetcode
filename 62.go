@@ -9,10 +9,25 @@ package leetcode
 /**
  *  f(m)(n) = 为走到m,n坐标总共的路径
  *  m为横坐标，n为纵坐标
- *  f(m)(n) = f(m-1)(n)+f(m)(n+1)
+ *  f(m)(n) = f(m-1)(n)+f(m)(n-1)
  *  f(m-1)(n) = f(m-2)(n)+f(m-1)(n-1)
  *  ...
  *	...
- *	f(1)(0) = 1
+ *	f(x)(0) = 1 f(0)(x) = 1
  *	f(0)(0) = 1
  */
+
+func HavePaths(m, n int) int {
+	var f = make(map[int]map[int]int)
+	for i := 0; i < m; i++ {
+		f[i] = make(map[int]int)
+		for j := 0; j < n; j++ {
+			if i == 0 || j == 0 {
+				f[i][j] = 1
+			} else {
+				f[i][j] = f[i-1][j] + f[i][j-1]
+			}
+		}
+	}
+	return f[m-1][n-1]
+}
